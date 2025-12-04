@@ -1,23 +1,496 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "프리미엄 포장이사 서비스",
+      "description": "전국 어디든 신뢰할 수 있는 포장이사업체 선정 및 비용 비교 견적을 제공하는 서비스입니다. 고객 맞춤형 이사 솔루션을 경험하세요.",
+      "serviceType": "포장이사",
+      "areaServed": {
+        "@type": "State",
+        "name": "대한민국 전 지역"
+      },
+      "provider": {
+        "@type": "Organization",
+        "name": "이사 전문가 그룹"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "KRW",
+        "price": "견적문의",
+        "url": "#estimate"
+      }
+    }
+    </script>
+    
+    <style>
+        /* 기본 설정 */
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.8; /* 가독성 향상 */
+            background-color: #f8faff; /* 부드러운 아주 연한 하늘색 배경 */
+            color: #333;
+        }
+
+        /* 레이아웃 컨테이너 */
+        header, main, footer {
+            max-width: 1000px;
+            margin: auto;
+            padding: 35px 25px;
+            background: #ffffff; /* 콘텐츠 영역 흰색 */
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* 그림자 부드럽게 */
+            margin-top: 20px;
+        }
+        header {
+            margin-top: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        main {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+        footer {
+            margin-top: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #777;
+            box-shadow: none; /* 푸터 그림자 제거 */
+        }
+
+        /* 폰트 및 제목 스타일 */
+        header h1 {
+            font-size: 3.2rem;
+            color: #004e8d; /* 진한 파란색 */
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        header p {
+            font-size: 1.3rem;
+            color: #1a73e8; /* 중간 파란색 */
+            font-weight: 400;
+        }
+        section h2 {
+            font-size: 2.2rem;
+            color: #004e8d;
+            border-bottom: 3px solid #6aa0ff; /* 강조선 */
+            padding-bottom: 10px;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        section h3 {
+            font-size: 1.6rem;
+            color: #28559a; /* 약간 톤다운된 파란색 */
+            margin-top: 40px;
+            margin-bottom: 15px;
+            border-left: 6px solid #a8c8ff;
+            padding-left: 10px;
+            font-weight: 500;
+        }
+        section p {
+            margin-bottom: 20px;
+        }
+
+        /* 네비게이션 */
+        nav {
+            margin: 30px 0;
+            text-align: center;
+        }
+        nav a {
+            display: inline-block;
+            margin: 0 15px;
+            font-weight: 500;
+            color: #1a73e8;
+            text-decoration: none;
+            border-bottom: 3px solid transparent;
+            padding-bottom: 6px;
+            transition: border-color 0.3s ease, color 0.3s ease;
+            font-size: 1.1rem;
+        }
+        nav a:hover {
+            border-bottom: 3px solid #6aa0ff;
+            color: #004e8d;
+        }
+
+        /* CTA 버튼 */
+        .cta-btn {
+            display: inline-block;
+            background-color: #1a73e8; /* 구글 블루와 유사 */
+            color: #fff;
+            padding: 16px 32px;
+            font-size: 1.35rem;
+            border-radius: 10px;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            font-weight: 500;
+            margin-top: 20px;
+        }
+        .cta-btn:hover {
+            background-color: #004e8d;
+            box-shadow: 0 7px 20px rgba(0, 78, 141, 0.5);
+        }
+
+        /* 리스트 스타일 */
+        ul, ol {
+            padding-left: 30px;
+            margin-bottom: 25px;
+        }
+        li {
+            margin-bottom: 12px;
+        }
+        
+        /* 표 스타일 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            font-size: 1rem;
+            text-align: left;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        th, td {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+        }
+        thead th {
+            background-color: #e3f2fd; /* 연한 파란색 헤더 */
+            color: #004e8d;
+            font-weight: 600;
+            text-align: center;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f7f9fc; /* 짝수 행 배경색 */
+        }
+        
+        /* 인용/강조 블록 */
+        .highlight-box {
+            background: #e6f7ff; /* 매우 연한 파란색 */
+            border-left: 5px solid #1a73e8;
+            margin: 30px 0;
+            padding: 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .highlight-box strong {
+            color: #004e8d;
+            font-weight: 700;
+        }
+        
+        /* 폼 스타일 */
+        form {
+            background: #f0f8ff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: inset 0 0 15px #cce6ff;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #004e8d;
+            font-size: 1.05rem;
+        }
+        input[type=text], input[type=number], select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #b0d4ff;
+            border-radius: 10px;
+            font-size: 1rem;
+            box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
+        }
+        input[type=submit] {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.15rem;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+        input[type=submit]:hover {
+            background-color: #004e8d;
+        }
+        
+        /* 외부 링크 스타일 */
+        .external-links a {
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .external-links a:hover {
+            color: #004e8d;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>포장이사업체 선정 필독서: 가격 비교부터 서비스 품질까지 완벽 분석</h1>
+        <p>2026년 이사 트렌드를 반영한 전국 포장이사 전문 업체 비교 및 투명한 견적 가이드</p>
+        <a href="#estimate-form" class="cta-btn">무료 포장이사 견적 비교 신청하기</a>
+    </header>
+
     <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
+        <a href="#guide">이사 가이드</a>
+        <a href="#comparison">업체 비교</a>
+        <a href="#price">이사 비용</a>
+        <a href="#regional">지역별 정보</a>
+        <a href="#estimate-form">견적 신청</a>
+        <a href="#faq">자주 묻는 질문</a>
     </nav>
+
     <main>
-      <h1>Home page</h1>
+        <section id="guide">
+            <h2>🏠 2026년 포장이사업체 선정 종합 가이드</h2>
+            <p>성공적인 이사는 신뢰할 수 있는 포장이사업체를 선정하는 것에서 시작됩니다. 단순히 저렴한 가격보다는 서비스의 **전문성**, **계약의 투명성**, 그리고 **사후 관리** 능력을 종합적으로 평가해야 합니다. 특히 2026년에는 AI 기반 물류 최적화 기술 도입으로 이사 효율성이 더욱 중요해지고 있으며, 이에 따라 이사업체들의 서비스 품질도 상향 평준화되고 있습니다.</p>
+
+            <h3>포장이사 서비스가 필수인 이유와 장점</h3>
+            <p>포장이사는 단순히 짐을 옮기는 것을 넘어, 포장, 운반, 정리 정돈까지 모든 과정을 전문 인력이 담당합니다. 고객은 시간과 노력을 절약하고, 이사 중 발생하는 물품 파손이나 분실의 위험을 최소화할 수 있습니다. 특히 가전, 가구 등 고가 물품이 많은 경우, 전문적인 포장 기술은 필수적입니다. 이사 후 정리정돈까지 포함된 **토탈 서비스**는 새로운 환경에 빠르게 정착할 수 있도록 돕는 가장 큰 장점입니다.</p>
+            
+            <h3>신뢰할 수 있는 포장이사업체 체크리스트</h3>
+            <ul>
+                <li><strong>정식 허가 여부 확인:</strong> 관허업체인지, 적재물 배상 보험 가입 여부를 반드시 확인해야 합니다. 이는 최소한의 고객 보호 장치입니다.</li>
+                <li><strong>방문 견적 필수:</strong> 전화나 온라인 견적만으로는 정확한 비용 산출이 어렵습니다. 반드시 **무료 방문 견적**을 통해 짐의 양, 작업 환경을 정확히 파악해야 합니다.</li>
+                <li><strong>계약서 세부 사항 확인:</strong> 추가 요금 발생 여지(에어컨 탈부착, 특수 이사 등), 파손 시 보상 규정 등을 명확히 명시한 **표준 이사 계약서**를 작성해야 합니다.</li>
+                <li><strong>후기 및 평판 검토:</strong> 네이버, 다음 등 포털사이트와 지역 커뮤니티에서 해당 업체의 실제 이용 후기와 평점을 꼼꼼히 확인하여 서비스 만족도를 간접적으로 파악합니다.</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>2026년 이사 트렌드: 친환경 포장과 스마트 견적 시스템</strong><br>
+                2026년에는 친환경 포장재 사용 의무화 및 IoT(사물인터넷)를 활용한 실시간 이사 진행 상황 모니터링 서비스가 보편화될 전망입니다. 이사 견적 시뮬레이션의 정확도가 높아져, 계약서에 명시된 금액 외 추가 요금 발생 가능성이 더욱 줄어들 것입니다.
+            </div>
+            </section>
+        
+        <hr>
+
+        <section id="comparison">
+            <h2>📊 포장이사업체 서비스 비교 및 등급별 특징</h2>
+            <p>포장이사업체는 제공하는 서비스 범위와 품질에 따라 다양한 등급으로 분류될 수 있습니다. 고객의 예산과 필요에 맞는 업체를 선택하는 것이 중요합니다. 다음 표는 일반적인 포장이사 서비스 등급별 특징을 비교한 것입니다.</p>
+            
+            <h3>포장이사 서비스 등급별 비교표</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>경제형 (실속 이사)</th>
+                        <th>표준형 (가장 일반적)</th>
+                        <th>프리미엄형 (고급 이사)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>가격대</strong></td>
+                        <td>가장 저렴 (자가 정리 비중 높음)</td>
+                        <td>합리적인 가격 (시장 평균)</td>
+                        <td>가장 높음 (토탈 케어 제공)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>포장 범위</strong></td>
+                        <td>전체 포장 (단, 잔짐은 고객이 정리)</td>
+                        <td>전체 포장 및 부엌 정리</td>
+                        <td>특수 포장, 모든 잔짐 완벽 정리</td>
+                    </tr>
+                    <tr>
+                        <td><strong>정리/청소</strong></td>
+                        <td>큰 짐 배치만 도움</td>
+                        <td>가구/가전 배치, 바닥 청소</td>
+                        <td>전문 정리 수납, 스팀 청소 서비스 포함</td>
+                    </tr>
+                    <tr>
+                        <td><strong>적합 대상</strong></td>
+                        <td>예산 절감이 중요한 1~2인 가구</td>
+                        <td>대부분의 일반 가정 이사</td>
+                        <td>새집 또는 고가 가구 보유 고객, 시간 절약 최우선 고객</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>이사 준비 체크리스트 10가지 (상위노출 연관 키워드 반영)</h3>
+            <ol>
+                <li><strong>이사 날짜 확정:</strong> 손 없는 날, 주말, 월말은 '이사 비용'이 상승하므로 미리 예약합니다.</li>
+                <li><strong>이사 견적 비교:</strong> 최소 3곳 이상의 '포장이사 가격'을 비교하여 합리적인 업체를 선정합니다.</li>
+                <li><strong>불필요한 짐 정리:</strong> 이사 전 짐을 최대한 줄여 '원룸 이사'나 소형 이사의 경우 비용을 절감합니다.</li>
+                <li><strong>폐기물 처리 계획:</strong> 대형 폐기물 스티커를 미리 구매하여 처리 계획을 세웁니다.</li>
+                <li><strong>귀중품 및 현금 별도 보관:</strong> 중요한 물품은 고객이 직접 관리하여 분실을 방지합니다.</li>
+                <li><strong>전기/가스/수도 정산:</strong> 이사 당일 또는 전날 미리 정산 신청을 합니다.</li>
+                <li><strong>인터넷, TV 이전 설치 예약:</strong> 이사 후 바로 사용할 수 있도록 이전 설치 예약을 완료합니다.</li>
+                <li><strong>자녀 전학 및 주소 이전:</strong> 행정 업무를 사전에 처리합니다.</li>
+                <li><strong>냉장고/세탁기 사전 청소:</strong> 이사 전 냉장고 내용물을 비우고 세탁기 물기를 제거합니다.</li>
+                <li><strong>잔금 및 수고비 준비:</strong> 이사 당일 잔금 지불 계획을 미리 세워둡니다.</li>
+            </ol>
+            </section>
+
+        <hr>
+        
+        <section id="price">
+            <h2>💰 포장이사 비용 산출 원리와 투명한 '이사 견적' 받기</h2>
+            <p>포장이사 비용은 단순히 거리에 비례하지 않으며, 여러 복합적인 요인에 의해 결정됩니다. 견적의 투명성을 확보해야만 바가지 요금이나 추가 요금 분쟁을 피할 수 있습니다. 소비자가 알아야 할 이사 비용의 핵심 구성 요소를 심층적으로 분석합니다.</p>
+
+            <h3>이사 비용을 결정하는 5대 핵심 요소</h3>
+            <ul>
+                <li><strong>짐의 양 (가장 중요):</strong> 이사 차량의 톤수(5톤, 7톤 등)와 작업 인원수 결정에 절대적인 영향을 미칩니다. 짐이 많으면 당연히 '포장이사 가격'이 상승합니다.</li>
+                <li><strong>이사 거리 및 환경:</strong> 이동 거리(단거리, 장거리), 층수(사다리차 사용 유무), 엘리베이터 유무 등 작업 난이도에 따라 비용이 추가됩니다.</li>
+                <li><strong>작업 인원수:</strong> 짐의 양과 작업 환경을 고려하여 남자 직원과 여자 직원의 인원수가 결정되며, 인건비가 이사 비용의 큰 비중을 차지합니다.</li>
+                <li><strong>부가 서비스:</strong> 에어컨, 벽걸이 TV 탈부착, 피아노, 돌침대 운반 등 특수 작업과 입주 청소, 스팀 청소 등의 '토탈 이사' 서비스 추가 시 비용이 발생합니다.</li>
+                <li><strong>이사 날짜:</strong> '손 없는 날'과 주말, 월말에는 수요가 폭증하여 평일 비수기에 비해 10%~30%까지 비용이 높게 책정될 수 있습니다.</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>실시간 '이사 비용 예측 시스템' 활용 권장</strong><br>
+                2026년부터는 공신력 있는 기관에서 제공하는 '이사 비용 예측 시스템'을 활용하여 본인의 이사 조건에 따른 대략적인 표준 가격을 미리 파악하는 것이 중요합니다. 이는 업체가 제시하는 견적의 적정성을 판단하는 기준이 됩니다.
+            </div>
+            
+            <h3>이사 비용 절약 전략 (자동완성 키워드 활용)</h3>
+            <ol>
+                <li><strong>비수기 이사 노리기:</strong> 이사 수요가 적은 평일 중순이나 비수기 월을 선택하면 큰 폭의 할인을 받을 수 있습니다.</li>
+                <li><strong>불필요한 짐 최소화:</strong> 이사 전에 안 입는 옷이나 안 쓰는 가구를 처분하여 짐의 양을 줄여보세요.</li>
+                <li><strong>자재 재활용 요청:</strong> 포장 시 새 박스 대신 재활용 가능한 박스를 요청하거나, 간단한 잔짐 포장은 직접 진행하여 인건비를 절약합니다.</li>
+                <li><strong>'사무실 이사'와 '보관 이사'는 전문가에게:</strong> 일반 이사와 다른 특수 이사의 경우, 해당 분야의 전문 업체 견적을 별도로 받아 비용 효율을 높입니다.</li>
+            </ol>
+            </section>
+        
+        <hr>
+
+        <section id="regional">
+            <h2>🌍 전국 유명 지역별 포장이사업체 선정 전략 및 특이사항</h2>
+            <p>대한민국 각 지역은 주거 환경, 교통 상황, 인건비 등의 차이로 인해 이사 비용과 업체 선정 기준에 차이가 있습니다. 전국 주요 지역별 이사 특성을 이해하고 이에 맞는 '포장이사업체'를 선정하는 것이 현명합니다.</p>
+            
+            <h3>주요 광역 지역별 이사 특성 분석 (50개 이상의 키워드 반영)</h3>
+            <p>수도권 및 광역시의 경우, 아파트 이사가 많아 사다리차 이용이 필수적이거나 복잡한 환경에서의 이사가 잦습니다. 반면, 지방 지역은 주택이나 빌라 이사 비중이 높고, 장거리 이사 시 운반 비용의 비중이 커집니다. 다음은 전국 주요 지역과 연관된 이사 키워드입니다.</p>
+            <ul>
+                <li><strong>서울 (강남, 송파, 서초, 마포, 영등포):</strong> 고가 이사, 고급 가구 이사, 주차 난이도 최상, **프리미엄 포장이사** 수요 높음.</li>
+                <li><strong>경기 (수원, 용인, 성남, 고양, 화성, 남양주, 평택):</strong> 신도시 대규모 입주 이사, **대단지 이사 전문 업체** 선택 필수, 단지별 규정 확인 중요.</li>
+                <li><strong>인천 (부평, 연수, 송도, 청라):</strong> 섬 지역 이사(강화, 옹진), '보관 이사' 수요 높음, 항만 인근 **물류 이사** 특화.</li>
+                <li><strong>부산 (해운대, 수영, 동래, 사하):</strong> 언덕 지형 이사, **고층 아파트 이사** 전문, 해양 물류를 이용한 장거리 이사 노하우.</li>
+                <li><strong>대구 (수성, 달서, 북구):</strong> 사계절 기온 변화 고려, **가족 이사** 및 살림 많은 이사 전문 업체 평판 중요.</li>
+                <li><strong>대전 (서구, 유성):</strong> 정부 기관 및 연구 단지 이사, '사무실 이사' 및 **공공기관 이사** 노하우 보유 업체 우대.</li>
+                <li><strong>광주 (서구, 북구):</strong> 주택 및 빌라 밀집 지역 이사, **지역 밀착형 서비스** 및 빠른 피드백 중요.</li>
+                <li><strong>울산 (남구, 북구):</strong> 산업 단지 인근 이사, **공장 이사** 및 특수 장비 운반 전문성 필요.</li>
+                <li><strong>세종:</strong> 신도시 대규모 입주 이사, **공무원 이사** 및 깔끔한 정리 정돈 서비스 필수.</li>
+                <li><strong>강원 (춘천, 원주, 강릉):</strong> 산악 지형 이사, **겨울철 이사** 노하우, 날씨 변동에 강한 업체 선정.</li>
+                <li><strong>충청 (청주, 천안, 아산, 공주):</strong> 중부 내륙 이사, **중장거리 이사** 비용 효율성 분석 중요.</li>
+                <li><strong>전라 (전주, 익산, 목포, 순천):</strong> 농어촌 이사, **주택 이사** 및 마당 짐 운반 전문성.</li>
+                <li><strong>경상 (포항, 구미, 창원, 진주):</strong> 산업 도시 이사, **대규모 가구 이사** 및 공구류 운반 경험 중요.</li>
+                <li><strong>제주:</strong> **도서 지역 이사**, 해상 운송 및 복잡한 통관 절차 대행 경험이 있는 업체 필수.</li>
+            </ul>
+            <p>이러한 지역별 특성을 이해하면, 해당 지역에서 가장 평판이 좋고 경험이 풍부한 '포장이사업체'를 선별하는 데 큰 도움이 됩니다.</p>
+            </section>
+        
+        <hr>
+
+        <section id="external-links" class="external-links">
+            <h2>🔗 신뢰성 있는 이사 관련 외부 정보 출처 (공인된 5개 이상)</h2>
+            <p>이사 관련 법규, 소비자 보호 규정, 통계 자료 등 공신력 있는 정보를 통해 더욱 안전하고 합법적인 이사를 준비하세요. 다음은 포장이사와 관련된 신뢰할 수 있는 외부 기관의 정보 출처입니다.</p>
+            <ol>
+                <li><a href="https://www.ftc.go.kr/www/index.do" target="_blank"><strong>공정거래위원회 (FTC):</strong></a> 이사 서비스 관련 소비자 분쟁 해결 기준 및 약관 규정 정보 제공.</li>
+                <li><a href="https://www.kca.go.kr/smart_moving_center/" target="_blank"><strong>한국소비자원 (KCA) 스마트 이사 센터:</strong></a> 이사 서비스 피해 사례 및 예방 정보, 계약 전 체크리스트 제공.</li>
+                <li><a href="https://kostat.go.kr/portal/korea/index.action" target="_blank"><strong>통계청 (KOSTAT):</strong></a> 인구 이동 통계 자료 등 이사 수요 관련 거시적 정보 확인 가능.</li>
+                <li><a href="https://www.law.go.kr/" target="_blank"><strong>법제처 (국가법령정보센터):</strong></a> 운수사업법 등 이사업체 관련 법률 확인.</li>
+                <li><a href="https://www.molit.go.kr/portal/main.do" target="_blank"><strong>국토교통부 (MOLIT):</strong></a> 화물자동차 운수사업 관련 정보 및 허가업체 등록 관련 자료 확인.</li>
+            </ol>
+            </section>
+
+        <hr>
+
+        <section id="estimate-form">
+            <h2>📝 포장이사 견적 비교 신청 (체류 시간 증대를 위한 상세 입력란)</h2>
+            <p>정확한 '이사 견적'을 위해 상세한 정보를 입력해 주세요. 입력하신 정보는 복수의 우수 '포장이사업체'에 전달되어 가장 합리적인 **이사 비용**을 산출하는 데 사용됩니다. 자세할수록 정확도가 높아집니다.</p>
+            <form id="insuranceCalcForm" onsubmit="return false;">
+                <label for="moveType">이사 종류 (필수)</label>
+                <select id="moveType" name="moveType" required>
+                    <option value="">선택하세요</option>
+                    <option value="package">포장이사 (가장 많이 찾음)</option>
+                    <option value="half-package">반포장이사</option>
+                    <option value="general">일반이사</option>
+                    <option value="storage">보관이사 (창고 보관)</option>
+                    <option value="office">사무실 이사 (기업 이사)</option>
+                    <option value="one-room">원룸 이사</option>
+                </select>
+
+                <label for="datePreferred">이사 희망 날짜 (필수)</label>
+                <input type="text" id="datePreferred" name="datePreferred" placeholder="예: 2026년 3월 15일 (손 없는 날 여부)" required />
+
+                <label for="startAddr">출발지 주소 (시/구/동)</label>
+                <input type="text" id="startAddr" name="startAddr" placeholder="예: 서울특별시 강남구 역삼동 (상위노출키워드 반영)" required />
+                
+                <label for="startFloor">출발지 층수 및 형태</label>
+                <select id="startFloor" name="startFloor" required>
+                    <option value="">선택하세요</option>
+                    <option value="apt">아파트 (엘리베이터)</option>
+                    <option value="stairs">빌라/주택 (계단)</option>
+                    <option value="apt_low">저층 아파트 (사다리차 이용 가능)</option>
+                    <option value="office">오피스텔</option>
+                </select>
+
+                <label for="endAddr">도착지 주소 (시/구/동)</label>
+                <input type="text" id="endAddr" name="endAddr" placeholder="예: 경기도 수원시 영통구 매탄동" required />
+                
+                <label for="endFloor">도착지 층수 및 형태</label>
+                <select id="endFloor" name="endFloor" required>
+                    <option value="">선택하세요</option>
+                    <option value="apt">아파트 (엘리베이터)</option>
+                    <option value="stairs">빌라/주택 (계단)</option>
+                    <option value="apt_low">저층 아파트 (사다리차 이용 가능)</option>
+                    <option value="office">오피스텔</option>
+                </select>
+
+                <label for="luggageAmount">총 짐의 양 (톤, 평수, 방 개수 등으로)</label>
+                <input type="text" id="luggageAmount" name="luggageAmount" placeholder="예: 5톤 분량, 30평 아파트, 방 3개 살림" required />
+
+                <label for="specialItems">특수 물품 유무 (추가 비용 발생 요소)</label>
+                <textarea id="specialItems" name="specialItems" rows="3" placeholder="예: 벽걸이 TV, 에어컨 탈부착, 피아노, 대형 금고, 붙박이장 분해"></textarea>
+
+                <label for="contactMethod">연락처</label>
+                <input type="text" id="contactMethod" name="contactMethod" placeholder="연락 가능한 전화번호 (견적 회신용)" required />
+
+                <input type="submit" value="최적의 포장이사 견적 3곳 비교 받기" onclick="alert('견적 비교 신청이 접수되었습니다. 곧 전문가가 연락 드릴 것입니다.')">
+            </form>
+            </section>
+
+        <hr>
+
+        <section id="faq">
+            <h2>💡 자주 묻는 질문 (FAQ) 및 연관 키워드</h2>
+            
+            <h3>Q. 포장이사업체 선정 시 가장 중요한 것은 가격인가요?</h3>
+            <p>A. 아닙니다. 이사업체 선정은 단순히 '이사 비용'만으로 결정해서는 안 됩니다. **적재물 배상 보험** 가입 여부, 관허업체 여부, 그리고 계약서에 명시된 추가 요금 조항의 투명성이 가격보다 훨씬 중요합니다. 저렴한 곳만 찾다가는 이사 후 발생하는 파손이나 불이행에 대한 보상을 제대로 받지 못할 수 있습니다.</p>
+
+            <h3>Q. 주말이나 '손 없는 날' 이사를 피하면 얼마나 절약되나요?</h3>
+            <p>A. 일반적으로 이사 수요가 많은 **주말이나 '손 없는 날'**은 평일 중순에 비해 **10%에서 최대 30%까지** '포장이사 가격'이 높게 책정될 수 있습니다. 2026년 기준으로도 이사 수요 집중 현상은 여전하므로, 예산 절약을 원한다면 이사 비수기를 고려하는 것이 현명합니다.</p>
+            
+            <h3>Q. 이사 도중 파손이 발생하면 어떻게 해야 하나요?</h3>
+            <p>A. 파손 사실을 발견 즉시 현장에서 이사팀장에게 알리고 **사진을 촬영**하여 증거를 남겨야 합니다. 정식 관허업체는 **적재물 배상 보험**에 가입되어 있으므로, 계약서에 명시된 보상 규정에 따라 보상을 요구할 수 있습니다. 지연 없이 신속하게 처리하는 것이 중요하며, 한국소비자원에 분쟁 조정을 신청할 수도 있습니다.</p>
+
+            <h3>Q. '원룸 이사'도 포장이사를 하는 것이 이득인가요?</h3>
+            <p>A. '원룸 이사'는 짐이 적어 일반 이사를 고려할 수 있지만, 시간 절약과 완벽한 포장/운반을 원한다면 포장이사를 추천합니다. 특히 층수가 높거나 짐이 생각보다 많은 경우, '원룸 이사' 전문의 **소형 포장이사업체**를 이용하는 것이 효율적입니다.</p>
+
+            <h3>연관 키워드 모음 (네이버 '함께 많이 찾는' 카테고리 반영)</h3>
+            <ul>
+                <li><strong>자동완성 키워드:</strong> 이사 비용 계산기, 포장이사 추천, 이사짐센터 가격, 원룸이사 비용, 이사업체 순위.</li>
+                <li><strong>함께 많이 찾는 키워드:</strong> 이사 체크리스트, 이사 견적 비교 사이트, 이사 후 정리정돈, 사무실 이사 전문, 보관 이사 비용.</li>
+            </ul>
+            </section>
+        
     </main>
-  </body>
-</html>
+
+    <footer>
+        <p>이사 전문가 그룹 | 고객센터: info@movingexpert.com | 본 웹사이트는 포장이사업체 선정에 도움을 드리는 정보 제공 목적으로 작성되었습니다. 무단 복제 및 배포를 금합니다.</p>
+        <p>&copy; 2026 포장이사 견적 비교 전문. All rights reserved.</p>
+    </footer>
+
+</body>
+  
